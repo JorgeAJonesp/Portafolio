@@ -43,8 +43,11 @@ export function SpotifyNowPlaying() {
           </div>
           <div className="flex-1">
             <p className="text-sm text-white/60 font-mono">
-              No listening to Spotify
+              {error ? 'Spotify connection issue' : 'Not listening to Spotify'}
             </p>
+            {process.env.NODE_ENV === 'development' && error && (
+              <p className="text-xs text-red-400 mt-1">{error}</p>
+            )}
           </div>
         </div>
         <div className="flex gap-2">

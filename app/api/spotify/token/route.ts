@@ -6,7 +6,12 @@ const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET!;
 export async function POST(request: NextRequest) {
   try {
     const { code, grant_type, refresh_token } = await request.json();
-    const redirectUri = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001'}/callback/spotify`;
+    
+    // Determinar la URI de redirect correcta basada en el origen
+    const origin = request.headers.get('origin');
+    const redirectUri = origin?.includes('localhost') ? 
+      'http://localhost:3000/callback/spotify' : 
+      'https://jorgeajonesp.github.io/PortafolioJorgeAJones/callback/spotify';
 
     let body: Record<string, string>;
     
