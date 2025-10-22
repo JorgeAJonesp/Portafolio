@@ -23,31 +23,31 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <a href="#" className="text-xl font-bold font-mono">
-            {"<JJ />"}
+            {"<AJ />"}
           </a>
 
           <div className="hidden md:flex items-center gap-8">
             <a href="#about" className="text-sm hover:text-accent transition-colors">
-              About
+              Acerca de
             </a>
             <a href="#experience" className="text-sm hover:text-accent transition-colors">
-              Experience
+              Experiencia
             </a>
             <a href="#projects" className="text-sm hover:text-accent transition-colors">
-              Projects
+              Proyectos
             </a>
             <a href="#contact" className="text-sm hover:text-accent transition-colors">
-              Contact
+              Contacto
             </a>
           </div>
 
           <div className="flex items-center gap-4">
             <a
-              href="https://https://github.com/JorgeAJonesp"
+              href="https://github.com/JorgeAJonesp"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-accent transition-colors"
-              aria-label="GitHub"
+              aria-label="Perfil de GitHub"
             >
               <Github className="w-5 h-5" />
             </a>
@@ -56,11 +56,11 @@ export function Navigation() {
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-accent transition-colors"
-              aria-label="LinkedIn"
+              aria-label="Perfil de LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
             </a>
-            <a href="mailto:jorgealfredo_jones@hotmail.com" className="hover:text-accent transition-colors" aria-label="Email">
+            <a href="mailto:jorgealfredo_jones@hotmail.com" className="hover:text-accent transition-colors" aria-label="Enviar correo electrónico">
               <Mail className="w-5 h-5" />
             </a>
           </div>

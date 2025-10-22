@@ -273,7 +273,7 @@ export function Hero() {
       <a
         href="#about"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-primary"
-        aria-label="Scroll to about section"
+        aria-label="Ir a la sección acerca de"
       >
         <ArrowDown className="w-6 h-6" />
       </a>

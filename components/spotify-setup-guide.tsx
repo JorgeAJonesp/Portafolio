@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, ExternalLink, CheckCircle } from "lucide-react";
+import { Copy, ExternalLink, CheckCircle, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function SpotifySetupGuide() {
+interface SpotifySetupGuideProps {
+  onClose: () => void;
+}
+
+export function SpotifySetupGuide({ onClose }: SpotifySetupGuideProps) {
   const [copied, setCopied] = useState(false);
   
   const redirectUri = typeof window !== 'undefined' ? `${window.location.origin}/callback/spotify` : '';
@@ -22,9 +26,19 @@ export function SpotifySetupGuide() {
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
       <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 max-w-md w-full">
-        <h3 className="text-lg font-semibold text-white mb-4">
-          Configuración de Spotify Developer
-        </h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-white">
+            Configuración de Spotify Developer
+          </h3>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onClose}
+            className="h-8 w-8 p-0 hover:bg-gray-800"
+          >
+            <X className="w-4 h-4" />
+          </Button>
+        </div>
         
         <div className="space-y-4 text-sm text-gray-300">
           <p>Para conectar tu Spotify real, necesitas configurar la Redirect URI:</p>

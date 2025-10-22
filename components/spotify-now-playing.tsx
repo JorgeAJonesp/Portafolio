@@ -43,7 +43,7 @@ export function SpotifyNowPlaying() {
           </div>
           <div className="flex-1">
             <p className="text-sm text-white/60 font-mono">
-              {error ? 'Spotify connection issue' : 'Not listening to Spotify'}
+              {error ? 'Error de conexión con Spotify' : 'No escuchando música'}
             </p>
             {process.env.NODE_ENV === 'development' && error && (
               <p className="text-xs text-red-400 mt-1">{error}</p>
@@ -56,12 +56,12 @@ export function SpotifyNowPlaying() {
             className="flex-1 px-3 py-2 bg-[#1DB954] hover:bg-[#1ed760] text-white text-xs font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
           >
             <Link className="w-3 h-3" />
-            Connect Spotify
+            Conectar Spotify
           </button>
           <button
             onClick={() => setShowSetupGuide(true)}
             className="px-3 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center"
-            title="Setup Guide"
+            title="Guía de configuración"
           >
             <Settings className="w-3 h-3" />
           </button>
@@ -115,7 +115,7 @@ export function SpotifyNowPlaying() {
                 </span>
               </div>
               {!isRealData && (
-                <span className="text-xs text-white/40 font-mono">demo</span>
+                <span className="text-xs text-white/40 font-mono">simulación</span>
               )}
             </div>
             
@@ -142,10 +142,10 @@ export function SpotifyNowPlaying() {
       {/* Subtle Spotify branding */}
       <div className="absolute -top-1 -right-1 w-3 h-3 bg-[#1DB954] rounded-full opacity-60" />
       
-      {/* Setup Guide Modal */}
+      {/* Guía de configuración Modal */}
       {showSetupGuide && (
         <div className="fixed inset-0 z-50">
-          <SpotifySetupGuide />
+          <SpotifySetupGuide onClose={() => setShowSetupGuide(false)} />
           <div 
             className="absolute inset-0 bg-black/80"
             onClick={() => setShowSetupGuide(false)}

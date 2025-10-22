@@ -82,14 +82,14 @@ export function Projects() {
                   <a
                     href={project.github}
                     className="w-10 h-10 rounded-lg bg-black/80 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors"
-                    aria-label="View code"
+                    aria-label="Ver código fuente"
                   >
                     <Github className="w-5 h-5" />
                   </a>
                   <a
                     href={project.live}
                     className="w-10 h-10 rounded-lg bg-black/80 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-colors"
-                    aria-label="View live demo"
+                    aria-label="Ver demo en vivo"
                   >
                     <ExternalLink className="w-5 h-5" />
                   </a>
