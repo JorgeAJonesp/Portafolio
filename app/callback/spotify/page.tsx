@@ -11,50 +11,72 @@ function SpotifyCallbackContent() {
 
   useEffect(() => {
     const handleCallback = async () => {
-      console.log('Spotify callback started');
+      console.log('🎵 Spotify callback iniciado');
+      console.log('URL completa:', window.location.href);
+      
       const code = searchParams.get('code');
       const error = searchParams.get('error');
       const state = searchParams.get('state');
 
-      console.log('Callback params:', { code: !!code, error, state });
+      console.log('📝 Parámetros del callback:', { 
+        code: code ? code.substring(0, 10) + '...' : null, 
+        error, 
+        state: state ? state.substring(0, 10) + '...' : null 
+      });
 
       if (error) {
-        console.error('Spotify auth error:', error);
+        console.error('❌ Error de autenticación Spotify:', error);
         setStatus('error');
         setTimeout(() => {
+          if (window.opener) {
+            window.opener.postMessage({ type: 'SPOTIFY_AUTH_ERROR', error }, '*');
+          }
           window.close();
         }, 3000);
         return;
       }
 
-      if (code) {
-        try {
-          console.log('Exchanging code for token...');
-          const tokenData = await exchangeCodeForToken(code);
-          console.log('Token exchange successful');
-          
-          // Guardar tokens y tiempo de expiración
-          localStorage.setItem('spotify_access_token', tokenData.accessToken);
-          localStorage.setItem('spotify_refresh_token', tokenData.refreshToken);
-          localStorage.setItem('spotify_token_expires', (Date.now() + (tokenData.expiresIn * 1000)).toString());
-          
-          setStatus('success');
-          
-          // Notificar a la ventana padre que la autenticación fue exitosa
+      if (!code) {
+        console.error('❌ No se recibió código de autorización');
+        setStatus('error');
+        setTimeout(() => {
           if (window.opener) {
-            window.opener.postMessage({ type: 'SPOTIFY_AUTH_SUCCESS' }, '*');
+            window.opener.postMessage({ type: 'SPOTIFY_AUTH_ERROR', error: 'No authorization code' }, '*');
           }
-          
-          setTimeout(() => {
-            window.close();
-          }, 2000);
-        } catch (err) {
-          console.error('Error exchanging code:', err);
-          setStatus('error');
-          setTimeout(() => {
-            window.close();
-          }, 3000);
+          window.close();
+        }, 3000);
+        return;
+      }
+
+      try {
+        console.log('🔄 Intercambiando código por token...');
+        const tokenData = await exchangeCodeForToken(code);
+        console.log('✅ Intercambio de token exitoso');
+        
+        // Guardar tokens y tiempo de expiración
+        localStorage.setItem('spotify_access_token', tokenData.accessToken);
+        localStorage.setItem('spotify_refresh_token', tokenData.refreshToken);
+        localStorage.setItem('spotify_token_expires', (Date.now() + (tokenData.expiresIn * 1000)).toString());
+        
+        setStatus('success');
+        
+        // Notificar a la ventana padre que la autenticación fue exitosa
+        if (window.opener) {
+          window.opener.postMessage({ type: 'SPOTIFY_AUTH_SUCCESS' }, '*');
         }
+        
+        setTimeout(() => {
+          window.close();
+        }, 2000);
+      } catch (err) {
+        console.error('❌ Error intercambiando código:', err);
+        setStatus('error');
+        setTimeout(() => {
+          if (window.opener) {
+            window.opener.postMessage({ type: 'SPOTIFY_AUTH_ERROR', error: String(err) }, '*');
+          }
+          window.close();
+        }, 3000);
       }
     };
 

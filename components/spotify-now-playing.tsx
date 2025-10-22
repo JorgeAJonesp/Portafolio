@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSpotify } from "@/hooks/use-spotify";
 import { generateSpotifyAuthUrl } from "@/lib/spotify-auth";
 import { Music, Play, Pause, ExternalLink, Link, Settings } from "lucide-react";
@@ -11,12 +11,48 @@ export function SpotifyNowPlaying() {
   const { currentTrack, isLoading, error, isRealData } = useSpotify();
   const [showSetupGuide, setShowSetupGuide] = useState(false);
 
+  // Escuchar mensajes del popup de Spotify
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'SPOTIFY_AUTH_SUCCESS') {
+        console.log('✅ Autenticación Spotify exitosa');
+        // Recargar el componente para obtener datos reales
+        window.location.reload();
+      } else if (event.data.type === 'SPOTIFY_AUTH_ERROR') {
+        console.error('❌ Error en autenticación Spotify:', event.data.error);
+        setShowSetupGuide(true);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
   const handleConnectSpotify = async () => {
     try {
+      console.log('🚀 Abriendo ventana de autenticación Spotify...');
       const authUrl = await generateSpotifyAuthUrl();
-      window.open(authUrl, '_blank', 'width=500,height=600');
+      console.log('🔗 URL de autenticación:', authUrl);
+      
+      const popup = window.open(authUrl, 'spotify-auth', 'width=500,height=600,scrollbars=yes,resizable=yes');
+      
+      // Verificar si el popup se bloqueó
+      if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+        console.error('❌ Popup bloqueado por el navegador');
+        setShowSetupGuide(true);
+        return;
+      }
+      
+      // Verificar si el popup se cierra sin completar la autenticación
+      const checkClosed = setInterval(() => {
+        if (popup.closed) {
+          clearInterval(checkClosed);
+          console.log('🔐 Popup cerrado');
+        }
+      }, 1000);
+      
     } catch (error) {
-      console.error('Error opening Spotify auth:', error);
+      console.error('❌ Error abriendo auth Spotify:', error);
       setShowSetupGuide(true);
     }
   };

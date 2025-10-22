@@ -1,13 +1,9 @@
 import { generateCodeVerifier, generateCodeChallenge } from './pkce-utils';
 
-// Configuración para Spotify OAuth
+// Configuración para Spotify OAuth - Solo GitHub Pages
 export const SPOTIFY_CONFIG = {
   clientId: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID || "f50bb374b8cd47a0977810495c03c09b",
-  redirectUri: typeof window !== 'undefined' ? 
-    (window.location.hostname === 'localhost' ? 
-      'http://localhost:3000/callback/spotify' : 
-      'https://jorgeajonesp.github.io/PortafolioJorgeAJones/callback/spotify'
-    ) : '',
+  redirectUri: 'https://jorgeajonesp.github.io/PortafolioJorgeAJones/callback/spotify/',
   scopes: [
     'user-read-currently-playing',
     'user-read-playback-state',
