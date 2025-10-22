@@ -171,7 +171,7 @@ export function Hero() {
               <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/20 to-secondary/30 rounded-2xl blur-3xl animate-pulse" />
 
               <div className="relative group">
-                <div className="relative overflow-hidden rounded-2xl border-2 border-primary/30">
+                <div className="relative overflow-hidden rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/20 to-accent/20">
                   <Image
                     src="/Yo.jpg"
                     alt="Jorge Alfredo Jones Spindola"
@@ -179,6 +179,13 @@ export function Hero() {
                     height={500}
                     className="w-full h-full object-cover grayscale contrast-125"
                     priority
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyLli2O14n//2Q=="
+                    onError={(e) => {
+                      console.log('Error loading image:', e);
+                      // Fallback a placeholder si hay error
+                      e.currentTarget.src = '/placeholder-user.jpg';
+                    }}
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
