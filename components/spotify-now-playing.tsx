@@ -11,9 +11,9 @@ export function SpotifyNowPlaying() {
   const { currentTrack, isLoading, error, isRealData } = useSpotify();
   const [showSetupGuide, setShowSetupGuide] = useState(false);
 
-  const handleConnectSpotify = () => {
+  const handleConnectSpotify = async () => {
     try {
-      const authUrl = generateSpotifyAuthUrl();
+      const authUrl = await generateSpotifyAuthUrl();
       window.open(authUrl, '_blank', 'width=500,height=600');
     } catch (error) {
       console.error('Error opening Spotify auth:', error);

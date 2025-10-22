@@ -11,10 +11,15 @@ function SpotifyCallbackContent() {
 
   useEffect(() => {
     const handleCallback = async () => {
+      console.log('Spotify callback started');
       const code = searchParams.get('code');
       const error = searchParams.get('error');
+      const state = searchParams.get('state');
+
+      console.log('Callback params:', { code: !!code, error, state });
 
       if (error) {
+        console.error('Spotify auth error:', error);
         setStatus('error');
         setTimeout(() => {
           window.close();
@@ -24,7 +29,9 @@ function SpotifyCallbackContent() {
 
       if (code) {
         try {
+          console.log('Exchanging code for token...');
           const tokenData = await exchangeCodeForToken(code);
+          console.log('Token exchange successful');
           
           // Guardar tokens y tiempo de expiración
           localStorage.setItem('spotify_access_token', tokenData.accessToken);

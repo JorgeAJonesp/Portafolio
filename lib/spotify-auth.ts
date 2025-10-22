@@ -1,3 +1,5 @@
+import { generateCodeVerifier, generateCodeChallenge } from './pkce-utils';
+
 // Configuración para Spotify OAuth
 export const SPOTIFY_CONFIG = {
   clientId: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID || "f50bb374b8cd47a0977810495c03c09b",
@@ -12,13 +14,21 @@ export const SPOTIFY_CONFIG = {
   ].join(' '),
 };
 
-export function generateSpotifyAuthUrl(): string {
+export async function generateSpotifyAuthUrl(): Promise<string> {
+  const codeVerifier = generateCodeVerifier();
+  const codeChallenge = await generateCodeChallenge(codeVerifier);
+  
+  // Guardar el code_verifier para usarlo después
+  localStorage.setItem('spotify_code_verifier', codeVerifier);
+  
   const params = new URLSearchParams({
     response_type: 'code',
     client_id: SPOTIFY_CONFIG.clientId,
     scope: SPOTIFY_CONFIG.scopes,
     redirect_uri: SPOTIFY_CONFIG.redirectUri,
     state: generateRandomString(16),
+    code_challenge_method: 'S256',
+    code_challenge: codeChallenge,
   });
 
   return `https://accounts.spotify.com/authorize?${params.toString()}`;
@@ -36,14 +46,23 @@ export function generateRandomString(length: number): string {
 }
 
 export async function exchangeCodeForToken(code: string): Promise<{accessToken: string, refreshToken: string, expiresIn: number}> {
-  const response = await fetch('/api/spotify/token', {
+  const codeVerifier = localStorage.getItem('spotify_code_verifier');
+  
+  if (!codeVerifier) {
+    throw new Error('No code verifier found');
+  }
+
+  const response = await fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify({
-      code,
+    body: new URLSearchParams({
       grant_type: 'authorization_code',
+      code,
+      redirect_uri: SPOTIFY_CONFIG.redirectUri,
+      client_id: SPOTIFY_CONFIG.clientId,
+      code_verifier: codeVerifier,
     }),
   });
 
@@ -54,6 +73,10 @@ export async function exchangeCodeForToken(code: string): Promise<{accessToken: 
   }
 
   const data = await response.json();
+  
+  // Limpiar el code verifier
+  localStorage.removeItem('spotify_code_verifier');
+  
   return {
     accessToken: data.access_token,
     refreshToken: data.refresh_token,
@@ -62,14 +85,15 @@ export async function exchangeCodeForToken(code: string): Promise<{accessToken: 
 }
 
 export async function refreshAccessToken(refreshToken: string): Promise<string> {
-  const response = await fetch('/api/spotify/token', {
+  const response = await fetch('https://accounts.spotify.com/api/token', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify({
-      refresh_token: refreshToken,
+    body: new URLSearchParams({
       grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: SPOTIFY_CONFIG.clientId,
     }),
   });
 
