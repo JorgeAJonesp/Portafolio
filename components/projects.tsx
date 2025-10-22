@@ -1,4 +1,5 @@
 import { ExternalLink, Github } from "lucide-react"
+import { getImagePath } from "@/lib/path-utils"
 
 const projects = [
   {
@@ -71,7 +72,7 @@ export function Projects() {
             >
               <div className="relative overflow-hidden aspect-video bg-black/20">
                 <img
-                  src={project.image || "/placeholder.svg"}
+                  src={getImagePath(project.image || "placeholder.svg")}
                   alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />

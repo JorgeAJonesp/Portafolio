@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react"
 import { ArrowDown } from "lucide-react"
 import Image from "next/image"
 import { SpotifyNowPlaying } from "./spotify-now-playing"
+import { getImagePath } from "@/lib/path-utils"
 
 export function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -172,19 +173,21 @@ export function Hero() {
 
               <div className="relative group">
                 <div className="relative overflow-hidden rounded-2xl border-2 border-primary/30 bg-gradient-to-br from-primary/20 to-accent/20">
-                  <Image
-                    src="/Yo.jpg"
+                  {/* Usando img normal para mayor compatibilidad con GitHub Pages */}
+                  <img
+                    src={getImagePath("Yo.jpg")}
                     alt="Jorge Alfredo Jones Spindola"
                     width={500}
                     height={500}
                     className="w-full h-full object-cover grayscale contrast-125"
-                    priority
-                    placeholder="blur"
-                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyLli2O14n//2Q=="
+                    loading="eager"
                     onError={(e) => {
-                      console.log('Error loading image:', e);
-                      // Fallback a placeholder si hay error
-                      e.currentTarget.src = '/placeholder-user.jpg';
+                      // Evitar loop infinito 
+                      if (!e.currentTarget.dataset.fallbackAttempted) {
+                        e.currentTarget.dataset.fallbackAttempted = 'true';
+                        console.log('Trying fallback image...', getImagePath("placeholder-user.jpg"));
+                        e.currentTarget.src = getImagePath("placeholder-user.jpg");
+                      }
                     }}
                   />
 
