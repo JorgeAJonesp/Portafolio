@@ -3,15 +3,12 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
-  distDir: 'dist',
   typescript: {
     ignoreBuildErrors: true,
   },
   images: {
     unoptimized: true,
   },
-  assetPrefix: '/PortafolioJorgeAJones/',
-  basePath: '/PortafolioJorgeAJones',
 }
 
 export default nextConfig
