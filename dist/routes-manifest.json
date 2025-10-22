@@ -1,0 +1,1 @@
+{"version":3,"caseSensitive":false,"basePath":"/PortafolioJorgeAJones","rewrites":{"beforeFiles":[{"source":"/PortafolioJorgeAJones//_next/:path+","destination":"/PortafolioJorgeAJones/_next/:path+","regex":"^\\/PortafolioJorgeAJones\\/\\/_next(?:\\/((?:[^\\/]+?)(?:\\/(?:[^\\/]+?))*))(?:\\/)?$"}],"afterFiles":[],"fallback":[]},"redirects":[],"headers":[]}

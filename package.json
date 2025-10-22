@@ -1,9 +1,11 @@
 {
-  "name": "my-v0-project",
+  "name": "mi-portfolio-jones",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "next build",
+    "export": "next build && next export",
+    "deploy": "npm run export && gh-pages -d out",
     "dev": "next dev",
     "lint": "eslint .",
     "start": "next start"
