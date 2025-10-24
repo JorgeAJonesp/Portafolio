@@ -5,7 +5,7 @@ Para que Spotify funcione en tu portfolio, necesitas configurar correctamente la
 ## ✅ URI que debes agregar en Spotify Dashboard:
 
 ```
-https://jorgeajonesp.github.io/PortafolioJorgeAJones/callback/spotify/
+https://jorgeajonesp.github.io/Portafolio/callback/spotify/
 ```
 
 ## 📋 Pasos para configurar:
@@ -16,7 +16,7 @@ https://jorgeajonesp.github.io/PortafolioJorgeAJones/callback/spotify/
 2. **Click en "Edit Settings"**
 
 3. **En la sección "Redirect URIs":**
-   - Agregar: `https://jorgeajonesp.github.io/PortafolioJorgeAJones/callback/spotify/`
+   - Agregar: `https://jorgeajonesp.github.io/Portafolio/callback/spotify/`
    - ⚠️ **IMPORTANTE:** Incluir la barra final `/`
 
 4. **Click en "Save"**

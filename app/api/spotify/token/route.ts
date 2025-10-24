@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     const origin = request.headers.get('origin');
     const redirectUri = origin?.includes('localhost') ? 
       'http://localhost:3000/callback/spotify' : 
-      'https://jorgeajonesp.github.io/PortafolioJorgeAJones/callback/spotify';
+      'https://jorgeajonesp.github.io/Portafolio/callback/spotify';
 
     let body: Record<string, string>;
     

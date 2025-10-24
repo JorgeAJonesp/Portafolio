@@ -7,7 +7,7 @@ export function getImagePath(imagePath: string): string {
   
   // En producción, añadir el basePath para GitHub Pages
   if (process.env.NODE_ENV === 'production') {
-    return `/PortafolioJorgeAJones/${cleanPath}`;
+    return `/Portafolio/${cleanPath}`;
   }
   
   // En desarrollo, usar la ruta normal
@@ -15,5 +15,5 @@ export function getImagePath(imagePath: string): string {
 }
 
 export function getBasePath(): string {
-  return process.env.NODE_ENV === 'production' ? '/PortafolioJorgeAJones' : '';
+  return process.env.NODE_ENV === 'production' ? '/Portafolio' : '';
 }
