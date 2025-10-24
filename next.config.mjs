@@ -4,8 +4,8 @@ const nextConfig = {
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
   // Configuración específica para GitHub Pages
-  basePath: process.env.NODE_ENV === 'production' ? '/PortafolioJorgeAJones' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/PortafolioJorgeAJones/' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/Portafolio' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/Portafolio/' : '',
   typescript: {
     ignoreBuildErrors: true,
   },

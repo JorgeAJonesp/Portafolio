@@ -22,6 +22,12 @@ export function useSpotify() {
 
   useEffect(() => {
     const fetchCurrentTrack = async () => {
+      // Timeout para evitar carga infinita
+      const timeoutId = setTimeout(() => {
+        setIsLoading(false);
+        console.log('⏰ Timeout en carga de Spotify - mostrando botón conectar');
+      }, 3000);
+
       try {
         // Verificar si hay un access token almacenado (de OAuth)
         let accessToken = localStorage.getItem('spotify_access_token');
@@ -76,6 +82,7 @@ export function useSpotify() {
                 });
                 setIsRealData(true);
                 setIsLoading(false);
+                clearTimeout(timeoutId);
                 return;
               }
             }
@@ -130,10 +137,12 @@ export function useSpotify() {
         });
         setIsRealData(false);
         setIsLoading(false);
+        clearTimeout(timeoutId);
       } catch (err) {
         console.error('Spotify fetch error:', err);
         setError(err instanceof Error ? err.message : "Unknown error");
         setIsLoading(false);
+        clearTimeout(timeoutId);
       }
     };
 

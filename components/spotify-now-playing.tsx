@@ -86,20 +86,20 @@ export function SpotifyNowPlaying() {
             )}
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <button
             onClick={handleConnectSpotify}
-            className="flex-1 px-3 py-2 bg-[#1DB954] hover:bg-[#1ed760] text-white text-xs font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+            className="flex-1 px-4 py-3 bg-[#1DB954] hover:bg-[#1ed760] text-white text-sm font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg shadow-[#1DB954]/20"
           >
-            <Link className="w-3 h-3" />
+            <Link className="w-4 h-4" />
             Conectar Spotify
           </button>
           <button
             onClick={() => setShowSetupGuide(true)}
-            className="px-3 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center"
+            className="px-4 py-3 bg-white/10 hover:bg-white/20 text-white text-sm font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center"
             title="Guía de configuración"
           >
-            <Settings className="w-3 h-3" />
+            <Settings className="w-4 h-4" />
           </button>
         </div>
       </div>

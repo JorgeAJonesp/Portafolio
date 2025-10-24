@@ -212,7 +212,7 @@ export function Hero() {
             </div>
 
             {/* Spotify Now Playing - Agregado debajo de la foto */}
-            <div className="mt-6">
+            <div className="mt-6 w-full">
               <SpotifyNowPlaying />
             </div>
           </div>
